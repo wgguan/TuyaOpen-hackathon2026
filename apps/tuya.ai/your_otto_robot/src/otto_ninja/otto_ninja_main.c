@@ -117,6 +117,7 @@ int get_mode_counter(void){
 
 #define DPID_JOYSTICK_X 103 //joystick_x
 #define DPID_JOYSTICK_Y 104 //joystick_y
+#define DPID_DIRECTION 105 //direction
 OPERATE_RET otto_ninja_dp_obj_proc(dp_obj_recv_t *dpobj)
 {
     uint32_t index = 0;
@@ -160,6 +161,33 @@ OPERATE_RET otto_ninja_dp_obj_proc(dp_obj_recv_t *dpobj)
             break;
         }
 
+        case DPID_DIRECTION:{
+            int8_t direction = dp->value.dp_enum;
+            if(direction == 0){
+                set_joystick_y(100);
+                set_joystick_x(0);
+            }
+            else if(direction == 1){
+                set_joystick_y(-100);
+                set_joystick_x(0);
+            }
+            else if(direction == 2){
+                set_joystick_y(0);
+                set_joystick_x(100);
+            }
+            else if(direction == 3){
+                set_joystick_y(0);
+                set_joystick_x(-100);
+            }
+            else if(direction == 4){
+                set_joystick_y(0);
+                set_joystick_x(0);
+            }
+
+            PR_DEBUG("direction:%d", direction);
+            break;
+        }
+
 
         default:
             break;
@@ -187,7 +215,7 @@ static void __example_otto_ninja_task(void *param)
     PR_NOTICE("=== OttoNinja Servo Control Task Start ===");
 
     main_init();
-
+    tal_system_sleep(1000); // Wait 1 second before starting
     robot_set_walk();
     while (1) {
        

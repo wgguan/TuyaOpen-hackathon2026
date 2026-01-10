@@ -38,9 +38,4 @@ choice T5AI_OTTO_EX_MODULE
         bool "GC9D01 160x160 spi LCD"
         select ENABLE_DISPLAY
 	select ENABLE_LVGL_OS_FREERTOS if (LVGL_VERSION_9)
-
-    config T5AI_OTTO_EX_MODULE_GC9D01
-        bool "GC9D01 160x160 spi LCD"
-        select ENABLE_DISPLAY
-	select ENABLE_LVGL_OS_FREERTOS if (LVGL_VERSION_9)
 endchoice
